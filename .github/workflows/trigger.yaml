@@ -4,18 +4,20 @@ on:
       - "**"
 
 jobs:
-  getConfig:
-    uses: ./.github/workflows/getConfig.yaml
+  getGreeting:
+    uses: ./.github/workflows/getGreeting.yaml
 
   logConfig:
-    needs: getConfig
+    needs: getGreeting
     runs-on: ubuntu-latest
     steps:
       - name: Log Config
         run: |
-          if [ -z "${{ needs.getConfig.outputs.config }}" ]; then
-            echo "config is empty";
+          greeting=${{ needs.getGreeting.outputs.greeting }}
+
+          if [ -z "$greeting" ]; then
+            echo "Not greeting anyone :(";
             exit 1
           else
-            echo "config: ${{ needs.getConfig.outputs.config }}";
+            echo $greeting;
           fi
