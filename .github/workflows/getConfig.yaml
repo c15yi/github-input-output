@@ -1,0 +1,16 @@
+on:
+  workflow_call:
+    outputs:
+      config: ${{ jobs.getConfig.outputs.config }}
+
+jobs:
+  getConfig:
+    runs-on: ubuntu-latest
+    outputs:
+      config: ${{ steps.setConfig.outputs.config }}
+
+    steps:
+      - name: setConfig
+        id: setConfig
+        run: |
+          echo "config='Hello World'" >> $GITHUB_OUTPUT

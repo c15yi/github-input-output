@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  getConfig:
+    uses: ./.github/workflows/getConfig.yaml
+
+  logConfig:
+    needs: getConfig
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log Config
+        run: |
+          if [ -z "${{ needs.getConfig.outputs.config }}" ]; then
+            echo "config is empty";
+            exit 1
+          else
+            echo "config: ${{ needs.getConfig.outputs.config }}";
+          fi
